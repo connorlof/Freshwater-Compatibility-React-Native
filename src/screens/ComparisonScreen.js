@@ -5,14 +5,38 @@ import ModalTester from '../components/ModalTester.js';
 
 const ComparisonScreen = () => {
 
-    console.log(comparisonData[0].Comparison_Fish);
+    //var data = comparisonData;
+
+    // var data = comparisonData.map(function(item) {
+    //     return {
+    //         name: item.Comparison_Fish
+    //     };
+    // });
+
+    
+
+    //console.log(data.name);
+
+    //console.log(data.name);
+
+    //const datanamearr = Object.keys(data).map(key => data[key])
+
+    //const array = Object.values( datanamearr );
+
+    //console.log(array);
+
+    // var chartArrayFilter = data.map(function(item) {
+    //     return {value: item.Comparison_Fish};
+    //   });
+
+    //   console.log(chartArrayFilter);
 
     return (
         <View>
             <Text>Freshwater Compatibility</Text>
             
             <TouchableOpacity>
-                <ModalTester data={comparisonData[0].Comparison_Fish}/>
+                <ModalTester/>
             </TouchableOpacity>
             <TouchableOpacity>
                 <Text style={styles.buttonText}>Clear Tank</Text>

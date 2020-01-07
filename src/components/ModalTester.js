@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
-import { Modal, Text, TouchableHighlight, View, StyleSheet}
+import { Modal, Text, TouchableHighlight, View, StyleSheet, FlatList} from 'react-native';
+import comparisonData from '../../assets/data/family_comparison_freshwater.json';
 
-from 'react-native'
 class ModalTester extends Component {
 
-    constructor(props) {
-        super(props);
+    data = comparisonData;
 
-        this.data = {
-            fish: props.data,
-          };
-      }
+    _keyExtractor = (item, index) => item.Comparison_Fish.toString();
+
+    // constructor(props) {
+    //     super(props);
+
+    //     this.data = {
+    //         fishNames: props.data,
+    //       };
+    //   }
+
+    constructor() {
+        super();
+         this.fishNames = comparisonData
+    }
 
    state = {
       modalVisible: false,
@@ -29,9 +38,11 @@ class ModalTester extends Component {
                
                <View style = {styles.modal}>
 
-                  <Text style = {styles.text}>Select Species</Text>
-
-                  <Text>{this.data.fish}</Text>
+                <FlatList
+                    data={this.fishNames.data}
+                    keyExtractor={this._keyExtractor}
+                    renderItem={({item}) => <Text> {item.Comparison_Fish} </Text> }
+                />
                   
                   <TouchableHighlight onPress = {() => {
                      this.toggleModal(!this.state.modalVisible)}}>
