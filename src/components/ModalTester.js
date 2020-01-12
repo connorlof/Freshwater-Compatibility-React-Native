@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Text, TouchableHighlight, View, StyleSheet, FlatList} from 'react-native';
+import { Modal, Text, TouchableHighlight, View, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import comparisonData from '../../assets/data/family_comparison_freshwater.json';
 
 class ModalTester extends Component {
@@ -7,14 +7,6 @@ class ModalTester extends Component {
     data = comparisonData;
 
     _keyExtractor = (item, index) => item.Comparison_Fish.toString();
-
-    // constructor(props) {
-    //     super(props);
-
-    //     this.data = {
-    //         fishNames: props.data,
-    //       };
-    //   }
 
     constructor() {
         super();
@@ -41,19 +33,19 @@ class ModalTester extends Component {
                 <FlatList
                     data={this.fishNames.data}
                     keyExtractor={this._keyExtractor}
-                    renderItem={({item}) => <Text> {item.Comparison_Fish} </Text> }
+                    renderItem={({item}) => {
+                        return(
+                            <TouchableOpacity onPress={() => console.log(item.Comparison_Fish)}>
+                                <Text style = {styles.text}> {item.Comparison_Fish} </Text>
+                            </TouchableOpacity>
+                        );
+                    }}
                 />
-                  
-                  <TouchableHighlight onPress = {() => {
-                     this.toggleModal(!this.state.modalVisible)}}>
-                     
-                     <Text style = {styles.text}>Add Fish</Text>
-                  </TouchableHighlight>
 
                   <TouchableHighlight onPress = {() => {
                      this.toggleModal(!this.state.modalVisible)}}>
                      
-                     <Text style = {styles.text}>Close</Text>
+                     <Text style = {styles.text}>Cancel</Text>
                   </TouchableHighlight>
 
                </View>
