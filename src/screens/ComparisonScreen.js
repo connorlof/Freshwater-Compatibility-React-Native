@@ -1,35 +1,17 @@
-import React, { Component }  from 'react';
+import React, { useState, useEffect }  from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import comparisonData from '../../assets/data/family_comparison_freshwater.json';
 import ModalTester from '../components/ModalTester.js';
 
 const ComparisonScreen = () => {
+    const [addedFish, setAddedFish] = useState([]);
+    const [result, setResult] = useState('');
 
-    //var data = comparisonData;
-
-    // var data = comparisonData.map(function(item) {
-    //     return {
-    //         name: item.Comparison_Fish
-    //     };
-    // });
-
-    
-
-    //console.log(data.name);
-
-    //console.log(data.name);
-
-    //const datanamearr = Object.keys(data).map(key => data[key])
-
-    //const array = Object.values( datanamearr );
-
-    //console.log(array);
-
-    // var chartArrayFilter = data.map(function(item) {
-    //     return {value: item.Comparison_Fish};
-    //   });
-
-    //   console.log(chartArrayFilter);
+    const onFishAdded = (fishAdded) => {
+        console.log('Added fish: ', fishAdded);
+        setAddedFish([fishAdded]);
+        console.log('addedFish index 0: ', addedFish[0]);
+    }
 
     return (
         <View>
@@ -38,7 +20,7 @@ const ComparisonScreen = () => {
             <TouchableOpacity>
                 <ModalTester/>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => onFishAdded("Angelfish")}>
                 <Text style={styles.buttonText}>Clear Tank</Text>
             </TouchableOpacity>
         </View>
