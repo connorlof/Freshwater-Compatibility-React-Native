@@ -1,32 +1,29 @@
 import React, { useState, useEffect }  from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import comparisonData from '../../assets/data/family_comparison_freshwater.json';
-import ModalTester from '../components/ModalTester.js';
+import ModalFishSelect from '../components/ModalFishSelect.js';
 
 const addedFish = [];
 const compData = comparisonData;
 
 const ComparisonScreen = () => {
 
-    // console.log("Comparison Fish: ", compData.data[0].Comparison_Fish);
-
-    // for(var i = 0; i < compData.data.length; i++) {
-    //     console.log("Comparison Fish i: ", compData.data[i].Comparison_Fish);
-    // }
-
     const [result, setResult] = useState(['']);
+
+    const logFish = () => {
+        console.log("logging fish");
+    }
 
     const clearFish = () => {
         addedFish.length = 0;
-        console.log('addedFish: ', addedFish);
-
         determineResult(addedFish);
     }
 
     const addFish = (fishToAdd) => {
-        console.log('Added fish: ', fishToAdd);
         addedFish.push(fishToAdd);
-        console.log('addedFish: ', addedFish);
+
+        console.log('Added fish: ', fishToAdd);
+        console.log('addedFish array: ', addedFish);
 
         determineResult(addedFish);
     }
@@ -56,16 +53,10 @@ const ComparisonScreen = () => {
         const comparisonResults = [];
 
         for(var i = 0; i < addedFish.length; i++) {
-            console.log("addedFish i: ", addedFish[i]);
 
             for(var j = 0; j < numFish; j++) {
 
                 if(addedFish[i] === compData.data[j].Comparison_Fish) {
-
-                    console.log("Found match - addedFishp[i]: ", addedFish[i],
-                        " - Comparison_Fish:", compData.data[j].Comparison_Fish);
-
-                    console.log("Result: ", compData.data[j].Bettas);
 
                     switch(addedFish[i]) {
                         case "Angelfish":
@@ -177,7 +168,7 @@ const ComparisonScreen = () => {
                 <Text style={styles.buttonText}>Add betta</Text>
             </TouchableOpacity>
             <TouchableOpacity>
-                <ModalTester/>
+                <ModalFishSelect onDismiss={logFish}/>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => clearFish()}>
                 <Text style={styles.buttonText}>Clear Tank</Text>

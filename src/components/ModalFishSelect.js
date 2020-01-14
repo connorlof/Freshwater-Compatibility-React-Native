@@ -2,22 +2,27 @@ import React, { Component } from 'react';
 import { Modal, Text, TouchableHighlight, View, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import comparisonData from '../../assets/data/family_comparison_freshwater.json';
 
-class ModalTester extends Component {
+class ModalFishSelect extends Component {
 
     data = comparisonData;
 
     _keyExtractor = (item, index) => item.Comparison_Fish.toString();
 
     constructor() {
-        super();
-         this.fishNames = comparisonData
+      super();
+      this.fishNames = comparisonData;
     }
 
    state = {
       modalVisible: false,
    }
 
-   toggleModal(visible) {
+   toggleModal(visible, fishToAdd) {
+
+      if(visible === false) {
+         console.log(fishToAdd);
+      }
+
       this.setState({ modalVisible: visible });
    }
 
@@ -35,7 +40,7 @@ class ModalTester extends Component {
                     keyExtractor={this._keyExtractor}
                     renderItem={({item}) => {
                         return(
-                            <TouchableOpacity onPress={() => console.log(item.Comparison_Fish)}>
+                            <TouchableOpacity onPress = {() => {this.toggleModal(false, item.Comparison_Fish)}}>
                                 <Text style = {styles.text}> {item.Comparison_Fish} </Text>
                             </TouchableOpacity>
                         );
@@ -43,7 +48,7 @@ class ModalTester extends Component {
                 />
 
                   <TouchableHighlight onPress = {() => {
-                     this.toggleModal(!this.state.modalVisible)}}>
+                     this.toggleModal(!this.state.modalVisible, '')}}>
                      
                      <Text style = {styles.text}>Cancel</Text>
                   </TouchableHighlight>
@@ -51,14 +56,14 @@ class ModalTester extends Component {
                </View>
             </Modal>
             
-            <TouchableHighlight onPress = {() => {this.toggleModal(true)}}>
+            <TouchableHighlight onPress = {() => {this.toggleModal(true, '')}}>
                <Text style = {styles.text}>Add Fish</Text>
             </TouchableHighlight>
          </View>
       )
    }
 }
-export default ModalTester
+export default ModalFishSelect
 
 const styles = StyleSheet.create ({
    container: {
