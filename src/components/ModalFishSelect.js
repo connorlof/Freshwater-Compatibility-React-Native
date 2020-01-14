@@ -8,9 +8,10 @@ class ModalFishSelect extends Component {
 
     _keyExtractor = (item, index) => item.Comparison_Fish.toString();
 
-    constructor() {
+    constructor({ onSubmit }) {
       super();
       this.fishNames = comparisonData;
+      this.onSubmitFish = onSubmit;
     }
 
    state = {
@@ -20,7 +21,7 @@ class ModalFishSelect extends Component {
    toggleModal(visible, fishToAdd) {
 
       if(visible === false) {
-         console.log(fishToAdd);
+         this.onSubmitFish(fishToAdd);
       }
 
       this.setState({ modalVisible: visible });
