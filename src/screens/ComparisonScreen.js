@@ -1,18 +1,15 @@
 import React, { useState, useEffect }  from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import comparisonData from '../../assets/data/family_comparison_freshwater.json';
 import ModalFishSelect from '../components/ModalFishSelect.js';
 
 const addedFish = [];
 const compData = comparisonData;
+var icon = require('./image/fish_tank_empty.png');
 
 const ComparisonScreen = () => {
 
     const [result, setResult] = useState(['']);
-
-    const logFish = () => {
-        console.log("logging fish");
-    }
 
     const clearFish = () => {
         addedFish.length = 0;
@@ -35,12 +32,16 @@ const ComparisonScreen = () => {
         var topLevelResult = '';
 
         if(results.includes('no')) {
+            icon = require('./image/fish_tank_bad.png');
             topLevelResult = 'Not compatible';
         }else if(results.includes('warn')) {
+            icon = require('./image/fish_tank_warn.png');
             topLevelResult = 'Use caution';
         }else if(results.includes('yes')) {
+            icon = require('./image/fish_tank_good.png');
             topLevelResult = 'Generally compatible';
         }else{
+            icon = require('./image/fish_tank_empty.png');
             topLevelResult = '';
         }
 
@@ -170,8 +171,9 @@ const ComparisonScreen = () => {
 
     return (
         <View>
-            <Text>Freshwater Compatibility</Text>
-            
+
+            <Image style={styles.imageStyle} source={icon} />
+
             <Text>{result}</Text>
 
             <TouchableOpacity>
@@ -196,6 +198,10 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 36
+    },
+    imageStyle: {
+        width: 300,
+        height: 300
     }
 });
 
