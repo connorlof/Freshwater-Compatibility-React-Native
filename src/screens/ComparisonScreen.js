@@ -170,13 +170,13 @@ const ComparisonScreen = () => {
     }
 
     return (
-        <View>
+        <View style={styles.container}>
 
             <Image style={styles.imageStyle} source={icon} />
 
             <Text>{result}</Text>
 
-            <TouchableOpacity>
+            <TouchableOpacity style={styles.buttonStyle}>
                 <ModalFishSelect 
                     onSubmit={(fish) => {
                         addFish(fish);
@@ -184,7 +184,7 @@ const ComparisonScreen = () => {
                 />
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => clearFish()}>
+            <TouchableOpacity style={styles.buttonStyle} onPress={() => clearFish()}>
                 <Text style={styles.buttonText}>Clear Tank</Text>
             </TouchableOpacity>
         </View>
@@ -192,6 +192,10 @@ const ComparisonScreen = () => {
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center'
+    },
     iconStyle: {
         fontSize: 32,
         marginRight: 8
@@ -201,7 +205,16 @@ const styles = StyleSheet.create({
     },
     imageStyle: {
         width: 300,
-        height: 300
+        height: 300,
+        marginTop: 16
+    },
+    buttonStyle: {
+        borderRadius: 24,
+        borderWidth: 4,
+        padding: 8,
+        marginTop: 8,
+        width: 300,
+        alignItems: 'center'
     }
 });
 
