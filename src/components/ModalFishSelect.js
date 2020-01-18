@@ -42,13 +42,13 @@ class ModalFishSelect extends Component {
                     renderItem={({item}) => {
                         return(
                             <TouchableOpacity onPress = {() => {this.toggleModal(false, item.Comparison_Fish)}}>
-                                <Text style = {styles.text}> {item.Comparison_Fish} </Text>
+                                <Text style = {styles.text}> {item.Comparison_Fish.replace(/_/g, ' ')} </Text>
                             </TouchableOpacity>
                         );
                     }}
                 />
 
-                  <TouchableHighlight onPress = {() => {
+                  <TouchableHighlight style={styles.buttonStyle} onPress = {() => {
                      this.toggleModal(!this.state.modalVisible, '')}}>
                      
                      <Text style = {styles.text}>Cancel</Text>
@@ -75,6 +75,15 @@ const styles = StyleSheet.create ({
       alignItems: 'center'
    },
    text: {
-      fontSize: 36
-   }
+      fontSize: 28,
+      textAlign: 'center'
+   },
+   buttonStyle: {
+      borderRadius: 24,
+      borderWidth: 4,
+      padding: 8,
+      margin: 4,
+      width: 200,
+      alignItems: 'center'
+  }
 })

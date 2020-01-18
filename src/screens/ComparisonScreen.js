@@ -1,15 +1,18 @@
 import React, { useState, useEffect }  from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from 'react-native';
 import comparisonData from '../../assets/data/family_comparison_freshwater.json';
 import ModalFishSelect from '../components/ModalFishSelect.js';
 
 const addedFish = [];
+var detailedResults = [];
 const compData = comparisonData;
 var icon = require('./image/fish_tank_empty.png');
 
 const ComparisonScreen = () => {
 
-    const [result, setResult] = useState(['']);
+    console.log('Detailed Results', detailedResults);
+
+    const [result, setResult] = useState(['Start by adding a fish']);
 
     const clearFish = () => {
         addedFish.length = 0;
@@ -33,16 +36,16 @@ const ComparisonScreen = () => {
 
         if(results.includes('no')) {
             icon = require('./image/fish_tank_bad.png');
-            topLevelResult = 'Not compatible';
+            topLevelResult = 'Not Compatible';
         }else if(results.includes('warn')) {
             icon = require('./image/fish_tank_warn.png');
-            topLevelResult = 'Use caution';
+            topLevelResult = 'Use Caution';
         }else if(results.includes('yes')) {
             icon = require('./image/fish_tank_good.png');
-            topLevelResult = 'Generally compatible';
+            topLevelResult = 'Generally Compatible';
         }else{
             icon = require('./image/fish_tank_empty.png');
-            topLevelResult = '';
+            topLevelResult = 'Add another fish!';
         }
 
         setResult(topLevelResult);
@@ -52,6 +55,7 @@ const ComparisonScreen = () => {
 
         const numFish = compData.data.length;
         const comparisonResults = [];
+        detailedResults = [];
 
         if(addedFish.length < 2) {
             console.log("Returning, at least two fish must be selected.");
@@ -155,6 +159,20 @@ const ComparisonScreen = () => {
                                 break;
                         }
 
+                        if(comparisonResults[comparisonResults.length - 1] === 'warn') {
+                            const resultString = `Warning when mixing ${addedFish[i].replace(/_/g, ' ')} & ${addedFish[k].replace(/_/g, ' ')}.`;
+                            
+                            if(!detailedResults.includes(resultString)) {
+                                detailedResults.push(resultString);
+                            }
+                        } else if(comparisonResults[comparisonResults.length - 1] === 'no') {
+                            const resultString = `${addedFish[i].replace(/_/g, ' ')} & ${addedFish[k].replace(/_/g, ' ')} are not compatible.`;
+                            
+                            if(!detailedResults.includes(resultString)) {
+                                detailedResults.push(resultString);
+                            }
+                        }
+
                     }
 
                 }
@@ -174,19 +192,35 @@ const ComparisonScreen = () => {
 
             <Image style={styles.imageStyle} source={icon} />
 
-            <Text>{result}</Text>
+            <Text style={styles.resultText}>{result}</Text>
 
-            <TouchableOpacity style={styles.buttonStyle}>
-                <ModalFishSelect 
-                    onSubmit={(fish) => {
-                        addFish(fish);
-                    }}
-                />
-            </TouchableOpacity>
+            <FlatList
+                data={detailedResults}
+                keyExtractor={index => index}
+                renderItem={({item}) => {
+                    return(
+                        <Text style={{textAlign: 'center'}}> {item} </Text>
+                    );
+                }}
+            />
 
-            <TouchableOpacity style={styles.buttonStyle} onPress={() => clearFish()}>
-                <Text style={styles.buttonText}>Clear Tank</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+
+                <TouchableOpacity style={styles.buttonStyle}>
+                    <ModalFishSelect 
+                        onSubmit={(fish) => {
+                            addFish(fish);
+                        }}
+                    />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.buttonStyle} onPress={() => clearFish()}>
+                    <Text style={styles.buttonText}>Clear Tank</Text>
+                </TouchableOpacity>
+
+            </View>
+
+            
         </View>
     );
 };
@@ -201,7 +235,7 @@ const styles = StyleSheet.create({
         marginRight: 8
     },
     buttonText: {
-        fontSize: 36
+        fontSize: 28
     },
     imageStyle: {
         width: 300,
@@ -212,9 +246,19 @@ const styles = StyleSheet.create({
         borderRadius: 24,
         borderWidth: 4,
         padding: 8,
-        marginTop: 8,
-        width: 300,
+        margin: 4,
+        flex: 2,
         alignItems: 'center'
+    },
+    buttonContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginBottom: 8,
+        alignItems: 'center'
+    },
+    resultText: {
+        fontSize: 24
     }
 });
 
